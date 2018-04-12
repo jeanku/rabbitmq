@@ -8,7 +8,7 @@ Via Composer
 
 
 # initialization
-you can set database config at entrance file(index.php) as follow:
+add config in .env file as follow,and make sure we can get the config with the method env():
 ``` bash
 .env file config:
 RABBITMQ_HOST=127.0.0.1             #rabbitmq host
@@ -16,6 +16,7 @@ RABBITMQ_USERNAME=rabbitmq          #rabbitmq user
 RABBITMQ_PASSWORD=123456            #rabbitmq password
 RABBITMQ_PORT=5672                  #rabbit port
 ```
+
 
 # push message
 ``` bash
@@ -58,6 +59,11 @@ create your Class and Extends Jeanku\Rabbitmq\Consume;
          //todo
      }
  }
+ ```
+ 
+ # run your service
+ ``` bash
+   php Demo.php 
  ```
 
  
