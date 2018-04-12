@@ -3,36 +3,63 @@
 Via Composer
 
 ``` bash
- composer require jeanku/database:dev-master
+ composer require jeanku/rabbitmq:dev-master
 ```
 
 
 # initialization
 you can set database config at entrance file(index.php) as follow:
 ``` bash
-\Jeanku\Database\DatabaseManager::make(WEBPATH . '/config/database.php');
+.env file config:
+RABBITMQ_HOST=127.0.0.1             #rabbitmq host
+RABBITMQ_USERNAME=rabbitmq          #rabbitmq user
+RABBITMQ_PASSWORD=123456            #rabbitmq password
+RABBITMQ_PORT=5672                  #rabbit port
 ```
 
-# extend model
-you can extend the model as follow:
+# push message
 ``` bash
- class CoachModel extends \Jeanku\Database\Eloquent\Model
+ Jeanku\Rabbitmq\Product::push($content, $exchangeKey, $routeKey);
 ```
 
-then you can use it as laravel model:
+# consume message
+create your Class and Extends Jeanku\Rabbitmq\Consume;
 ``` bash
- $data = CoachModel::where('id', 10001)->get()->toArray();
+<?php
+ 
+ use Jeanku\Rabbitmq\Consume;
+ 
+ /**
+  * consume message
+  * @desc more description
+  * @date 2018-04-02
+  */
+ class Demo extends Consume
+ {
+     //exchange name
+     protected $exchange = 'demo';
+     //queue name
+     protected $queue = 'email';
+     //route key
+     protected $route = 'email';
+     //default direct
+     protected $type = AMQP_EX_TYPE_DIRECT;
+     //空队列等待时间 默认10秒
+     protected $wait = 10;
+     //多消费者任务均衡分配 默认一个
+     protected $prefetch = 1;
+ 
+     /**
+      * your business code
+      * @param string $mge require the message you get from queue
+      * @return array
+      */
+     public function handle($msg) {
+         //todo
+     }
+ }
  ```
 
-# db
-if you wantto use laravel DB to do sth, then you can use the class as this:
-``` bash
- use Jeanku\Database\DatabaseManager as DB;
-```
-then you can use it as laravel DB:
-``` bash
- $data = DB::table('table')->where('id', 10001)->get();
-```
  
 	
 
