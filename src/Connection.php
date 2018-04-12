@@ -32,7 +32,7 @@ class Connection
      */
     public function getConnection()
     {
-        $config = require dirname(__FILE__) . '/config/connection.php';
+        $config = require dirname(dirname(__FILE__)) . '/config/connection.php';
         $conn = new \AMQPConnection($config);
         //创建连接和channel
         if (!$conn->connect()) {
