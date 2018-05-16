@@ -58,7 +58,7 @@ RABBITMQ_PORT=5672                  #rabbit port
 
 # step 2: push message:
 ``` bash
- Demo::push($content);
+Demo::push('log message');
 ```
  
 # step 3: consume queue

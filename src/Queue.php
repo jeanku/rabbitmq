@@ -68,11 +68,7 @@ abstract class Queue
         $exchange = new \AMQPExchange($channel);
         $model = new static();
         $exchange->setName($model->exchange);
-        if (!empty($model->route)) {
-            $exchange->publish($message, $model->route);
-        } else {
-            $exchange->publish($message);
-        }
+        $exchange->publish($message, $model->route);
         $conn->disconnect();
     }
 
